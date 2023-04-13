@@ -2,7 +2,7 @@ import {  Link } from "react-router-dom";
 import Footer from "./Footer";
 import "./index.css";
 import { AiTwotoneStar, AiOutlineShoppingCart } from "react-icons/ai";
-
+import Product from "./Product";
 
 function Home() {
     return (
@@ -21,34 +21,9 @@ function Home() {
             <h2>Featured Products</h2>
             <p>Summer Collection New Morden design</p>
             <div className="product-container">
-              <div className="pro">
-                <img src="public/product/f1.jpg" alt="" />
-                <div className="des">
-                  <span>Adidas</span>
-                  <h5>Cartoon Astronaut T-Shirts</h5>
-                  <div className="star">
-                    <a href="">
-                      <AiTwotoneStar />
-                    </a>
-                    <a href="">
-                      <AiTwotoneStar />
-                    </a>
-                    <a href="">
-                      <AiTwotoneStar />
-                    </a>
-                    <a href="">
-                      <AiTwotoneStar />
-                    </a>
-                    <a href="">
-                      <AiTwotoneStar />
-                    </a>
-                  </div>
-                  <h4>$78.00</h4>
-                </div>
-                <a href="#">
-                  <AiOutlineShoppingCart />
-                </a>
-              </div>
+
+            <Product brand="Adidas" name={'Cartoon Astronaut T-Shirts'} price={78} url={'public/product/f1.jpg'}/>
+              
 
               <div className="pro">
                 <img src="public/product/f2.jpg" alt="" />
