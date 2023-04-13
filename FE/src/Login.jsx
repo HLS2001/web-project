@@ -1,10 +1,39 @@
 function Login() {
-    return (
+  return (
     <div className="Login">
-        hi
+      <div className="box-form">
+        <div className="left">
+          <div className="overlay">
+            <h1>Hello World.</h1>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
+              et est sed felis aliquet sollicitudin
+            </p>
+          </div>
+        </div>
 
+        <div class="right">
+          <h5>Login</h5>
+
+          <div class="inputs">
+            <input type="text" placeholder="user name" />
+            <br />
+            <input type="password" placeholder="password" />
+          </div>
+
+          <br />
+          <br />
+
+          <div className="remember-me--forget-password">
+            <p>forget password?</p>
+          </div>
+
+          <br />
+          <button>Login</button>
+        </div>
+      </div>
     </div>
-    )
-  }
-  
-  export default Login
+  );
+}
+
+export default Login;

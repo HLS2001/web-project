@@ -1,21 +1,33 @@
-
-
+import ShopItem from "./ShopItem";
+import SelectInput from "./SelectInput";
 function Shop() {
-    return (
-    <div className="Shop">
+  return (
+    <div className="shop-body">
+      <div className="Shop">
         <div className="shop-mid">
-            <div className="search">
-            <input type="text"  placeholder="Search"></input>
-            </div>
+          
+          <SelectInput title='Categoiry' options={[]}/>
 
-            <div className="catetory">
-                <h2>Category</h2>
-                <button className="All">All</button>
-            </div>
+          <div className="shop-item">
+            <label htmlFor="">Name</label>
+            <input type="text" placeholder="product name"></input>
+          </div>
+
+          <div className="shop-item">
+            <label htmlFor="">Min price</label>
+            <input type="number" name="minprice"></input>
+          </div>
+          <div className="shop-item">
+            <label htmlFor="">Max price</label>
+            <input type="number" name="maxprice"></input>
+          </div>
+          <div className="shop-item-submit">
+            <button>search</button>
+          </div>
         </div>
-
+      </div>
     </div>
-    )
-  }
-  
-  export default Shop;
+  );
+}
+
+export default Shop;

@@ -1,45 +1,80 @@
-import {  NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import Logo from "./Logo";
-import { BiShoppingBag,BiLogIn } from "react-icons/bi";
+import { BiShoppingBag } from "react-icons/bi";
 import "./index.css";
-import Footer from "./Footer";
+import { FaOutdent } from "react-icons/fa";
+import React, { useState } from "react";
 
-function Home() {
-    return (
-      <><>
+function Navbar() {
+  const [isNavExpanded, setIsNavExpanded] = useState(false);
+
+  return (
+    <>
+      <>
         <section className="header">
           <Logo width={180} height={90} />
-
-          <ul className="navbar">
-            <li>
-              <NavLink to='/' className={({ isActive }) => isActive ? 'active' : ''}>
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/shop" className={({ isActive }) => isActive ? 'active' : ''}>Shop</NavLink>
-            </li>
-
-            <li>
-              <NavLink to='/about' className={({ isActive }) => isActive ? 'active' : ''}>About</NavLink>
-            </li>
-
-            <li>
-              <NavLink to='/Bag' className={({ isActive }) => isActive ? 'active' : ''}>
-                <BiShoppingBag />
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to='/Login' className={({ isActive }) => isActive ? 'active' : ''}>Login</NavLink>
-            </li>
-          </ul>
+          <button
+            className="hamburger"
+            onClick={() => {
+              setIsNavExpanded(!isNavExpanded);
+            }}
+          >
+            <FaOutdent />
+          </button>
+          <div
+            className={
+              isNavExpanded ? "navigation-menu expanded" : "navigation-menu"
+            }
+          >
+            <div className="expanded">
+            <ul className="navbar">
+              <li>
+                <NavLink
+                  to="/"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="shop"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                  Shop
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="about"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                  About
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="bag"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                  <BiShoppingBag />
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="login"
+                  className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                  Login
+                </NavLink>
+              </li>
+            </ul>
+            </div>
+          </div>
         </section>
         <Outlet />
       </>
-      </>
-  
-        
-    );
-  }
-  
-  export default Home;
+    </>
+  );
+}
+export default Navbar;
