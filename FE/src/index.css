@@ -78,7 +78,7 @@ a{
 .mid{
    background-image: url('/body-background.png'); 
    width: 100%;
-  height: 90vh; 
+   height: 90vh; 
   
   background-size: cover;
   background-position: top 40% right 0;
@@ -104,7 +104,7 @@ a{
   margin: 10px;
   color: gray;
 }
-.mid button{
+.mid a button{
   border: 0;
   padding: 14px 80px 14px 65px;
   background-image: url('/public/button.png');
@@ -112,6 +112,7 @@ a{
   color: #088178;
   font-weight: 700;
   font-size: 16px;
+  cursor: pointer;
 }
 /* ------------------------ */
 #product1{
@@ -225,52 +226,7 @@ footer {
 
 /* -------------------------------- */
 
-.About{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.about2{
-  align-self: flex-start;
-  width: 402px;
-  border:1px solid gray;
-  max-width: 100%;
-  margin-left: 100px ;
-  margin-top: 30px;
-}
-.about-item{
-  position: relative;
-  display: hidden;
 
-}
-.about-item img{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.about-container{
-  display: grid;
-  grid-template-columns: 200px 200px 200px 200px;
-  grid-template-rows: 300px 300px   ;
-}
-.about-item:nth-child(1){
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-end: 3;
-  grid-row-start: 1;
-}
-/* .about-item:nth-child(2){
-  grid-column-start: 3;
-  grid-column-end: 5;
-  
-}
-.about-item:nth-child(3){
-  grid-column-start: 3;
-  grid-column-end: 5;
-  
-} */
 
 .Login {
   background-image: linear-gradient(135deg, #FAB2FF 10%, #1904E5 100%);

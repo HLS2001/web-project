@@ -1,5 +1,7 @@
 import ShopItem from "./ShopItem";
 import SelectInput from "./SelectInput";
+
+
 function Shop() {
   return (
     <div className="shop-body">
