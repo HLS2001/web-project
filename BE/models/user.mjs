@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-const phoneRegEx = /^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/
+const phoneRegEx = /^\d+$/
 const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w+)+$/
 
 const UserSchema = new Schema({
-    username: { type: String, required: true, trim: true }, // TODO: write validator
+    username: { type: String, required: true, unique: true, trim: true }, // TODO: write validator
     password: { type: String, required: true }, // TODO: write validator and hash
     type: { type: String, required: true }, // Should be an enum
     phone: {
@@ -19,6 +19,7 @@ const UserSchema = new Schema({
     email: {
         type: String,
         required: true,
+        unique: true,
         validate: email => {
             return emailRegEx.test(email);
         },
@@ -26,3 +27,5 @@ const UserSchema = new Schema({
     },
     address: { type: String, required: true, trim: true }
 });
+
+export default mongoose.model("User", UserSchema);
