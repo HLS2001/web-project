@@ -1,14 +1,6 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-/**
- * Idealy, we would want status to be a integer denoting
- * the order status. Which is matched against a predifined
- * lookup table, i.e. an enum. Use string for now.
- *
- * Per mongodb design, created date is accessible via
- * _id.getTimestamp()
- */
 const OrderSchema = new Schema({
     userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
     address: { type: String, required: true, trim: true },
@@ -16,7 +8,15 @@ const OrderSchema = new Schema({
     status: {
         type: String,
         required: true,
-        trim: true,
+        enum: [
+            'Processing',
+            'Confirm',
+            'Packaging',
+            'Delivering',
+            'Delivered',
+            'Canceled',
+        ],
+        default: 'Processing',
     },
     shipperId: {
         type: Schema.Types.ObjectId,

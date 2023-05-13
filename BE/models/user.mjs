@@ -5,9 +5,14 @@ const phoneRegEx = /^\d+$/;
 const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w+)+$/;
 
 const UserSchema = new Schema({
-    username: { type: String, required: true, unique: true, trim: true }, // TODO: write validator
-    password: { type: String, required: true }, // TODO: write validator and hash
-    type: { type: String, required: true }, // Should be an enum
+    username: { type: String, required: true, unique: true, trim: true },
+    password: { type: String, required: true },
+    type: {
+        type: String,
+        required: true,
+        enum: ['Customer', 'Admin'],
+        defualt: 'Customer',
+    },
     phone: {
         type: String,
         required: true,
