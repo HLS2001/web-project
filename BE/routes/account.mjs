@@ -1,5 +1,5 @@
 import express from 'express';
-import User from '../models/user.mjs'
+import User from '../models/user.mjs';
 const router = express.Router();
 
 router.get('/all', async function (req, res) {
@@ -15,17 +15,20 @@ router.post('/login', async function (req, res) {
     let password = req.body.password;
 
     if (username && password) {
-        const query = await User.findOne({ username: username, password: password }).exec();
+        const query = await User.findOne({
+            username: username,
+            password: password,
+        }).exec();
         if (!query.errors) {
             req.session.loggedin = true;
             req.session.userId = query._id;
 
             res.status(200).send();
         } else {
-            res.status(400).send("Invalid username or password");
+            res.status(400).send('Invalid username or password');
         }
     } else {
-        res.status(400).send("Missing username or password");
+        res.status(400).send('Missing username or password');
     }
 });
 
@@ -34,12 +37,12 @@ router.post('/logout', async function (req, res) {
 
     if (req.session.loggedin) {
         try {
-            req.session.destroy()
+            req.session.destroy();
         } catch (error) {
             res.status(400).send(error);
         }
     } else {
-        res.status(401).send("No user logged in");
+        res.status(401).send('No user logged in');
     }
 });
 
@@ -49,10 +52,10 @@ router.post('/register', async function (req, res) {
     const newUser = new User({
         username: req.body.username,
         password: req.body.password,
-        type: "customer",
-        phone: "0338574764",
-        email: "test@email.com",
-        address: "ha"
+        type: 'customer',
+        phone: '0338574764',
+        email: 'test@email.com',
+        address: 'ha',
     });
 
     try {

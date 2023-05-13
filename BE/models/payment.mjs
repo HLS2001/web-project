@@ -3,10 +3,18 @@ const { Schema } = mongoose;
 
 const PaymentSchema = new Schema({
     status: { type: String, required: true, trim: true },
-    amount: { type: Number, required: true, min: 0, validate: { validator: Number.isInteger, message: '{VALUE} is not an integer value' } },
+    amount: {
+        type: Number,
+        required: true,
+        min: 0,
+        validate: {
+            validator: Number.isInteger,
+            message: '{VALUE} is not an integer value',
+        },
+    },
     paymentDate: Date,
     method: { type: String, required: true, trim: true },
-    transactionNo: { type: String, trim: true }
+    transactionNo: { type: String, trim: true },
 });
 
-exports.Payment = mongoose.model("Payment", PaymentSchema);
+exports.Payment = mongoose.model('Payment', PaymentSchema);
