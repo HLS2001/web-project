@@ -19,7 +19,7 @@ const UserSchema = new Schema({
         validate: (phone) => {
             return phoneRegEx.test(phone);
         },
-        match: phoneRegEx, // https://stackoverflow.com/questions/66383516/add-mongoose-validation-for-phone-numbers
+        match: phoneRegEx,
     },
     email: {
         type: String,
@@ -33,4 +33,18 @@ const UserSchema = new Schema({
     address: { type: String, required: true, trim: true },
 });
 
-export default mongoose.model('User', UserSchema);
+const UserModel = mongoose.model('User', UserSchema);
+
+UserModel.findOneAndUpdate(
+    { username: 'admin' },
+    {
+        password: process.env.ADMIN_PASSOWRD || '123456',
+        type: 'Admin',
+        phone: '0000',
+        email: 'admin@admin.com',
+        address: 'Shop',
+    },
+    { upsert: true, new: true, setDefaultsOnInsert: true }
+);
+
+export default UserModel;
