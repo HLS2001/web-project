@@ -45,6 +45,6 @@ UserModel.findOneAndUpdate(
         address: 'Shop',
     },
     { upsert: true, new: true, setDefaultsOnInsert: true }
-);
+).exec();
 
 export default UserModel;

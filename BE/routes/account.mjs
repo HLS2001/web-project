@@ -5,6 +5,17 @@ const router = express.Router();
 router.get('/all', async function (req, res) {
     res.setHeader('Connection', 'close');
 
+    if (!req.session.loggedIn) {
+        res.status(401).end();
+        return;
+    }
+
+    const query = await User.findById(req.session.userId).exec();
+    if (query.type !== 'Admin') {
+        res.status(403);
+        return;
+    }
+
     res.send(await User.find().exec());
 });
 
@@ -19,8 +30,8 @@ router.post('/login', async function (req, res) {
             username: username,
             password: password,
         }).exec();
-        if (!query.errors) {
-            req.session.loggedin = true;
+        if (query) {
+            req.session.loggedIn = true;
             req.session.userId = query._id;
 
             res.status(200).send();
