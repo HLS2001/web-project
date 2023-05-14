@@ -60,22 +60,27 @@ router.post('/logout', async function (req, res) {
 router.post('/register', async function (req, res) {
     res.setHeader('Connection', 'close');
 
+    if (req.session.loggedIn) {
+        res.status(400).send('User is logging in');
+        return;
+    }
+
     const newUser = new User({
         username: req.body.username,
         password: req.body.password,
-        type: 'customer',
-        phone: '0338574764',
-        email: 'test@email.com',
-        address: 'ha',
+        type: req.body.type,
+        phone: req.body.phone,
+        email: req.body.email,
+        address: req.body.address,
     });
 
     try {
         await newUser.save();
-        // res.set(200);
     } catch (error) {
-        res.set(400);
+        res.status(400).end();
+        return;
     }
-    res.end();
+    res.status(200);
 });
 
 export default router;
