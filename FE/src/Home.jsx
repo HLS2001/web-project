@@ -3,17 +3,13 @@ import Footer from "./Footer";
 import "./index.css";
 import { AiTwotoneStar, AiOutlineShoppingCart } from "react-icons/ai";
 import Product from "./Product";
-
-
-import { useGetALLProductsQuery } from "./features/productsApi";
-
-const Home=()=>{
-  
-  const {data,error, isLoading} = useGetALLProductsQuery();
-  
-}
+import axios from "axios";
+import { useCallback, useEffect, useState } from "react";
+import useFetchProduct from "./hooks/useFetchProduct";
 
 function Home() {
+  const {pros} = useFetchProduct('http://localhost:5000/products')
+
   return (
     <div className="App">
       <div className="mid">
@@ -21,10 +17,20 @@ function Home() {
         <h2>Super value deals</h2>
         <h1>On all products</h1>
         <p>Save more with coupons & up to 70% off!</p>
-        <Link to="shop"><button>ShopNow</button></Link>
-        
+        <Link to="shop">
+          <button>ShopNow</button>
+        </Link>
       </div>
 
+
+      {pros.map((p) => (
+        <article key={p.id}>
+          <h1>{p.name}</h1>
+          
+        </article>
+        
+
+      ))}
       {/* <section id="product1" className="section-p1">
         <h2>Featured Products</h2>
         <p>Summer Collection New Morden design</p>

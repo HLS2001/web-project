@@ -1,21 +1,29 @@
-const express = require("express")
-const  cors = require("cors")
-// import express from "express"
+require('./db/connect')
+const express = require("express");
 const products = require("./products");
-// // import {connect} from './connect';
+// const connect = require('./connect');
+const tasks = require("./routes/tasks");
+// const uri = 'mongodb+srv://huynhson181001:Conmeobeo19970@cluster0.8rraen6.mongodb.net/test'
 
-// // const uri = 'mongodb+srv://huynhson181001:Conmeobeo19970@cluster0.8rraen6.mongodb.net/test'
 const port = process.env.PORT || 5000;
 const app = express();
 
-app.use(cors());
+// middleware
 app.use(express.json());
-app.get("/", (req, res) => {
-  res.json({});
-});
+
+//routes
 app.get("/products", (req, res) => {
-  res.send(products);
+  res.json(products);
 });
+
+app.use(
+  "/api/v1/tasks",
+  tasks
+);
+
+
+
+
 (async function () {
   try {
     // connect(uri)
