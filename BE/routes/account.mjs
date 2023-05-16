@@ -96,7 +96,7 @@ router.post('/register', async function (req, res) {
     }
 });
 
-router.post('/create', async function (req, res) {
+router.post('/add', async function (req, res) {
     res.setHeader('Connection', 'close');
 
     if (!(await Util.isAdminLoggedIn(req))) {
@@ -163,7 +163,7 @@ router.post('/edit', async function (req, res) {
     }
 });
 
-router.post('/delete', async function (req, res) {
+router.post('/remove', async function (req, res) {
     res.setHeader('Connection', 'close');
 
     if (!Util.isLoggedIn(req)) {
