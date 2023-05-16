@@ -4,7 +4,7 @@ import * as Util from './util.mjs';
 
 const router = express.Router();
 
-router.get('/find', async function (req, res) {
+router.all('/', async function (req, res) {
     res.setHeader('Connection', 'close');
 
     if (!(await Util.isAdminLoggedIn(req))) {
@@ -12,15 +12,15 @@ router.get('/find', async function (req, res) {
         return;
     }
 
-    if (Object.keys(req.params).length === 0) {
+    if (Object.keys(req.query).length === 0) {
         res.send(await User.find().exec());
     } else {
         let filter = {};
-        for (let key in req.params) {
+        for (let key in req.query) {
             if (key === 'id') {
-                filter['_id'] = req.params.id;
+                filter['_id'] = req.query.id;
             } else {
-                filter[key] = req.params[key];
+                filter[key] = req.query[key];
             }
         }
         res.send(await User.find(filter).exec());
@@ -70,36 +70,10 @@ router.post('/logout', async function (req, res) {
     }
 });
 
-router.post('/register', async function (req, res) {
-    res.setHeader('Connection', 'close');
-
-    if (Util.isLoggedIn(req)) {
-        res.status(400).send('User is logging in');
-        return;
-    }
-
-    const newUser = new User({
-        username: req.body.username,
-        password: req.body.password,
-        type: req.body.type,
-        phone: req.body.phone,
-        email: req.body.email,
-        address: req.body.address,
-    });
-
-    try {
-        await newUser.save();
-        res.status(200).end();
-    } catch (error) {
-        res.status(400).send(error);
-        return;
-    }
-});
-
 router.post('/add', async function (req, res) {
     res.setHeader('Connection', 'close');
 
-    if (!(await Util.isAdminLoggedIn(req))) {
+    if (Util.isLoggedIn(req) && !Util.isAdmin(req)) {
         res.status(403).end();
         return;
     }
@@ -115,14 +89,14 @@ router.post('/add', async function (req, res) {
 
     try {
         await newUser.save();
-        res.status(200).end();
+        res.status(200).send(newUser);
     } catch (error) {
         res.status(400).send(error);
         return;
     }
 });
 
-router.post('/edit', async function (req, res) {
+router.post('/:id/edit', async function (req, res) {
     res.setHeader('Connection', 'close');
 
     if (!Util.isLoggedIn(req)) {
@@ -130,40 +104,23 @@ router.post('/edit', async function (req, res) {
         return;
     }
 
-    if (await Util.isAdmin(req)) {
-        if (req.params.id) {
-            const query = await User.findByIdAndUpdate(
-                req.params.id,
-                { $set: req.body },
-                { new: true }
-            ).exec();
-            if (query) {
-                res.status(200).send(query);
-            } else {
-                res.status(404).send('User not found');
-            }
+    if ((await Util.isAdmin(req)) || req.params.id === req.session.userId) {
+        const query = await User.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body },
+            { new: true }
+        ).exec();
+        if (query) {
+            res.status(200).send(query);
         } else {
-            res.status(400).send('Missing id');
+            res.status(404).send('User not found');
         }
     } else {
-        if (req.params.id) {
-            res.status(400).send('User is not admin, id is not handled');
-        } else {
-            const query = await User.findByIdAndUpdate(
-                req.session.userId,
-                { $set: req.body },
-                { new: true }
-            ).exec();
-            if (query) {
-                res.status(200).send(query);
-            } else {
-                res.status(404).send('User not found');
-            }
-        }
+        res.status(400).end();
     }
 });
 
-router.post('/remove', async function (req, res) {
+router.post('/:id/remove', async function (req, res) {
     res.setHeader('Connection', 'close');
 
     if (!Util.isLoggedIn(req)) {
@@ -171,27 +128,19 @@ router.post('/remove', async function (req, res) {
         return;
     }
 
-    let id;
-    if (await Util.isAdmin(req)) {
-        if (req.params.id) {
-            id = req.params.id;
+    if ((await Util.isAdmin(req)) || req.params.id === req.session.userId) {
+        const query = await User.findByIdAndDelete(req.params.id).exec();
+        if (query) {
+            req.status(200).end();
         } else {
-            res.status(400).send('Missing id');
-            return;
+            req.status(400).send('User not found');
         }
     } else {
-        id = req.session.userId;
-    }
-
-    const query = await User.findByIdAndDelete(id).exec();
-    if (query) {
-        req.status(200).end();
-    } else {
-        req.status(400).send("User doesn't exist");
+        res.status(400).end();
     }
 });
 
-router.get('/info', async function (req, res) {
+router.get('/:id', async function (req, res) {
     res.setHeader('Connection', 'close');
 
     if (!Util.isLoggedIn(req)) {
@@ -199,23 +148,15 @@ router.get('/info', async function (req, res) {
         return;
     }
 
-    let id;
-    if (await Util.isAdmin(req)) {
-        if (req.params.id) {
-            id = req.params.id;
+    if ((await Util.isAdmin(req)) || req.params.id === req.session.userId) {
+        const queryInfo = await User.findById(req.params.id).exec();
+        if (queryInfo) {
+            res.status(200).send(queryInfo);
         } else {
-            res.status(400).send('Missing id');
-            return;
+            res.status(404).send('User not found');
         }
     } else {
-        id = req.session.userId;
-    }
-
-    const queryInfo = await User.findById(id).exec();
-    if (queryInfo) {
-        res.status(200).send(queryInfo);
-    } else {
-        res.status(404).send('User not found');
+        res.status(400).end();
     }
 });
 
