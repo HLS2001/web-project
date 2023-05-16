@@ -15,14 +15,7 @@ router.all('/', async function (req, res) {
     if (Object.keys(req.query).length === 0) {
         res.send(await User.find().exec());
     } else {
-        let filter = {};
-        for (let key in req.query) {
-            if (key === 'id') {
-                filter['_id'] = req.query.id;
-            } else {
-                filter[key] = req.query[key];
-            }
-        }
+        let filter = Util.toFilter(req.query);
         res.send(await User.find(filter).exec());
     }
 });

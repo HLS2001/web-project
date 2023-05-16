@@ -12,3 +12,15 @@ export async function isAdmin(req) {
 export async function isAdminLoggedIn(req) {
     return isLoggedIn(req) && (await isAdmin(req));
 }
+
+export function toFilter(obj) {
+    let filter = {};
+    for (let key in obj) {
+        if (key === 'id') {
+            filter['_id'] = req.query.id;
+        } else {
+            filter[key] = req.query[key];
+        }
+    }
+    return filter;
+}
