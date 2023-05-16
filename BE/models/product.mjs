@@ -14,7 +14,6 @@ const ProductSchema = new Schema({
     },
     discount: {
         type: Number,
-        required: true,
         min: 0,
         max: 100,
         validate: {
@@ -22,8 +21,11 @@ const ProductSchema = new Schema({
             message: '{VALUE} is not an integer value',
         },
     },
-    descirption: { type: String, trim: true },
-    categoryId: { type: Schema.Types.ObjectId, ref: 'Category' },
+    description: { type: String, trim: true },
+    categoryId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Category',
+    },
 });
 
-exports.Product = mongoose.model('Product', ProductSchema);
+export default mongoose.model('Product', ProductSchema);

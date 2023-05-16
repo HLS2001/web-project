@@ -11,7 +11,9 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import session from 'express-session';
+
 import accountRoute from './routes/account.mjs';
+import productRoute from './routes/product.mjs';
 
 const app = express();
 
@@ -32,10 +34,11 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/account', accountRoute);
+app.use('/api/product', productRoute);
 
 (async function () {
     try {
-        mongoose.connect(connectionString);
+        await mongoose.connect(connectionString);
 
         app.listen(port, () => {
             console.log(`server is running on port ${port}`);

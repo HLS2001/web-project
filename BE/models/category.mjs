@@ -10,5 +10,8 @@ const CategoryTreeSchema = new Schema({
     childId: { type: Schema.Types.ObjectId, ref: 'Category' },
 });
 
-exports.Category = mongoose.model('Category', CategorySchema);
-exports.CategoryTree = mongoose.model('CategoryTree', CategoryTreeSchema);
+const Category = mongoose.model('Category', CategorySchema);
+const CategoryTreeModel = mongoose.model('CategoryTree', CategoryTreeSchema);
+
+export default Category;
+export const CategoryTree = CategoryTreeModel;

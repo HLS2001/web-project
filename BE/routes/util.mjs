@@ -17,9 +17,9 @@ export function toFilter(obj) {
     let filter = {};
     for (let key in obj) {
         if (key === 'id') {
-            filter['_id'] = req.query.id;
+            filter['_id'] = obj.id;
         } else {
-            filter[key] = req.query[key];
+            filter[key] = obj[key];
         }
     }
     return filter;
