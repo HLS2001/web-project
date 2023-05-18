@@ -15,6 +15,7 @@ import session from 'express-session';
 import accountRoute from './routes/account.mjs';
 import productRoute from './routes/product.mjs';
 import categoryRoute from './routes/category.mjs';
+import orderRoute from './routes/order.mjs';
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.get('/', (req, res) => {
 app.use('/api/account', accountRoute);
 app.use('/api/product', productRoute);
 app.use('/api/category', categoryRoute);
+app.use('/api/order', orderRoute);
 
 (async function () {
     try {

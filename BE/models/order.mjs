@@ -1,10 +1,20 @@
 import mongoose from 'mongoose';
+import Category from './category.mjs';
 const { Schema } = mongoose;
 
 const OrderSchema = new Schema({
     userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
     address: { type: String, required: true, trim: true },
     note: { type: String, required: true, trim: true },
+    discount: {
+        type: Number,
+        min: 0,
+        max: 100,
+        validate: {
+            validator: Number.isInteger,
+            message: '{VALUE} is not an integer value',
+        },
+    },
     status: {
         type: String,
         required: true,
@@ -23,16 +33,30 @@ const OrderSchema = new Schema({
         required: true,
         ref: 'ShipperPartner',
     },
-    paymentId: { type: Schema.Types.ObjectId, required: true, ref: 'Payment' },
+    paymentId: { type: Schema.Types.ObjectId, ref: 'Payment' },
 });
 
-/**
- * Note: Currently, OrderItem doesn't store item's price which
- * can be problematic if the price changes after payment.
- */
 const OrderItemSchema = new Schema({
     orderId: { type: Schema.Types.ObjectId, required: true, ref: 'Order' },
     productId: { type: Schema.Types.ObjectId, required: true, ref: 'Product' },
+    price: {
+        type: Number,
+        required: true,
+        min: 0,
+        validate: {
+            validator: Number.isInteger,
+            message: '{VALUE} is not an integer value',
+        },
+    },
+    discount: {
+        type: Number,
+        min: 0,
+        max: 100,
+        validate: {
+            validator: Number.isInteger,
+            message: '{VALUE} is not an integer value',
+        },
+    },
     quantity: {
         type: Number,
         required: true,
@@ -44,5 +68,10 @@ const OrderItemSchema = new Schema({
     },
 });
 
-exports.Order = mongoose.model('Order', OrderSchema);
-exports.OrderItem = mongoose.model('OrderItem', OrderItemSchema);
+export const Order = mongoose.model('Order', OrderSchema);
+export const OrderItem = mongoose.model('OrderItem', OrderItemSchema);
+
+OrderSchema.post('remove', async function (res, next) {
+    await OrderItem.deleteMany({ orderId: this._id }).exec();
+    next();
+});
