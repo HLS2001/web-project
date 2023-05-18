@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
-import Category from './category.mjs';
+import Payment from './payment.mjs';
+import Shipper from './shipper.mjs';
+
 const { Schema } = mongoose;
 
 const OrderSchema = new Schema({
@@ -71,7 +73,13 @@ const OrderItemSchema = new Schema({
 export const Order = mongoose.model('Order', OrderSchema);
 export const OrderItem = mongoose.model('OrderItem', OrderItemSchema);
 
-OrderSchema.post('remove', async function (res, next) {
+OrderSchema.post('remove', async function (doc, next) {
     await OrderItem.deleteMany({ orderId: this._id }).exec();
+    if (this.paymentId) {
+        await Payment.findByIdAndDelete(this.paymentId).exec();
+    }
+    if (this.shipperId) {
+        await Shipper.findByIdAndDelete(this.shipperId).exec();
+    }
     next();
 });
