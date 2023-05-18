@@ -14,8 +14,5 @@ CategoryTreeSchema.index(
     { unique: true, dropDups: true }
 );
 
-const Category = mongoose.model('Category', CategorySchema);
-const CategoryTreeModel = mongoose.model('CategoryTree', CategoryTreeSchema);
-
-export default Category;
-export const CategoryTree = CategoryTreeModel;
+export const Category = mongoose.model('Category', CategorySchema);
+export const CategoryTree = mongoose.model('CategoryTree', CategoryTreeSchema);

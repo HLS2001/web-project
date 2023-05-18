@@ -17,4 +17,5 @@ const PaymentSchema = new Schema({
     transactionNo: { type: String, trim: true },
 });
 
-exports.Payment = mongoose.model('Payment', PaymentSchema);
+const Payment = mongoose.model('Payment', PaymentSchema);
+export default Payment;

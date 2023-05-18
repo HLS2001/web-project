@@ -233,3 +233,5 @@ router.post('/:id/:iid/remove', async function (req, res) {
         res.status(404).send(e.message);
     }
 });
+
+export default router;

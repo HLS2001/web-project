@@ -24,4 +24,6 @@ const ShipperPartnerSchema = new Schema({
     },
 });
 
-exports.ShipperPartner = mongoose.model('ShipperPartner', ShipperPartnerSchema);
+const Shipper = mongoose.model('ShipperPartner', ShipperPartnerSchema);
+
+export default Shipper;
