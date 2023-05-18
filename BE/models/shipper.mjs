@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-const phoneRegEx = /^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/;
+const phoneRegEx = /^\d+$/;
 const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w+)+$/;
 
 const ShipperPartnerSchema = new Schema({
@@ -12,7 +12,7 @@ const ShipperPartnerSchema = new Schema({
         validate: (phone) => {
             return phoneRegEx.test(phone);
         },
-        match: phoneRegEx, // https://stackoverflow.com/questions/66383516/add-mongoose-validation-for-phone-numbers
+        match: phoneRegEx,
     },
     email: {
         type: String,
