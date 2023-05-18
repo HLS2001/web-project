@@ -20,7 +20,7 @@ router.get('/', async function (req, res) {
 router.post('/add', async function (req, res) {
     res.setHeader('Connection', 'close');
 
-    if (!Util.isAdminLoggedIn(req)) {
+    if (!(await Util.isAdminLoggedIn(req))) {
         res.status(403).end();
         return;
     }
@@ -49,7 +49,7 @@ router.get('/:id', async function (req, res) {
 router.delete('/:id/remove', async function (req, res) {
     res.setHeader('Connection', 'close');
 
-    if (!Util.isAdminLoggedIn(req)) {
+    if (!(await Util.isAdminLoggedIn(req))) {
         res.status(403).end();
         return;
     }
@@ -65,7 +65,7 @@ router.delete('/:id/remove', async function (req, res) {
 router.patch('/:id/edit', async function (req, res) {
     res.setHeader('Connection', 'close');
 
-    if (!Util.isAdminLoggedIn(req)) {
+    if (!(await Util.isAdminLoggedIn(req))) {
         res.status(403).end();
         return;
     }

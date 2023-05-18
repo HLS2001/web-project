@@ -66,7 +66,7 @@ router.post('/logout', async function (req, res) {
 router.post('/add', async function (req, res) {
     res.setHeader('Connection', 'close');
 
-    if (Util.isLoggedIn(req) && !Util.isAdmin(req)) {
+    if (Util.isLoggedIn(req) && !(await Util.isAdmin(req))) {
         res.status(403).end();
         return;
     }
