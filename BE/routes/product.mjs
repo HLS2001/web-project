@@ -35,7 +35,7 @@ router.post('/add', async function (req, res) {
     }
 });
 
-router.post('/:id', async function (req, res) {
+router.get('/:id', async function (req, res) {
     res.setHeader('Connection', 'close');
 
     try {
@@ -46,7 +46,7 @@ router.post('/:id', async function (req, res) {
     }
 });
 
-router.post('/:id/remove', async function (req, res) {
+router.delete('/:id/remove', async function (req, res) {
     res.setHeader('Connection', 'close');
 
     if (!Util.isAdminLoggedIn(req)) {
@@ -62,7 +62,7 @@ router.post('/:id/remove', async function (req, res) {
     }
 });
 
-router.post('/:id/edit', async function (req, res) {
+router.patch('/:id/edit', async function (req, res) {
     res.setHeader('Connection', 'close');
 
     if (!Util.isAdminLoggedIn(req)) {
