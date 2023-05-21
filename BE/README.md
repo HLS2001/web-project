@@ -1,6 +1,7 @@
 ## Back end to a shopping website
 
 To run:
+
 ```
 npm install
 npm start
@@ -14,5 +15,8 @@ npm run dev
 ```
 
 To change environment variables, edit `.env` file:
-* `PORT=<your-port>`
-* `URI=<your-db-uri>`
+
+-   `PORT=<your-port>`
+-   `URI=<your-db-uri>`
+-   `FIREBASE_SERVICE_ACCOUNT_JSON=<path/to/json>`
+-   `BUCKET_ID=<bucket-id>`

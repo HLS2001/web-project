@@ -1,6 +1,4 @@
-// Import environment variables
-import * as dotenv from 'dotenv';
-dotenv.config();
+import './env.mjs';
 
 const port = process.env.PORT || 5000;
 const connectionString = process.env.URI || 'mongodb://127.0.0.1/shop';
@@ -16,6 +14,7 @@ import accountRoute from './routes/account.mjs';
 import productRoute from './routes/product.mjs';
 import categoryRoute from './routes/category.mjs';
 import orderRoute from './routes/order.mjs';
+import imageRoute from './routes/image.mjs';
 
 const app = express();
 
@@ -39,6 +38,7 @@ app.use('/api/account', accountRoute);
 app.use('/api/product', productRoute);
 app.use('/api/category', categoryRoute);
 app.use('/api/order', orderRoute);
+app.use('/api/image', imageRoute);
 
 (async function () {
     try {
