@@ -1,21 +1,24 @@
 {
-  "name": "be",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "type": "commonjs",
-  "scripts": {
-    "start": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "mongoose": "^7.0.2"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.22"
-  }
+    "name": "be",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon index.mjs",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "format": "prettier --write \"**/*.mjs\""
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^8.2.0",
+        "express": "^4.18.2",
+        "express-session": "^1.17.3",
+        "mongoose": "^7.0.2"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.22",
+        "prettier": "^2.4.1"
+    }
 }

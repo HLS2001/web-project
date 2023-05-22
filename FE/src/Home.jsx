@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import "./index.css";
-import { AiTwotoneStar, AiOutlineShoppingCart } from "react-icons/ai";
-import Product from "./Product";
+
+
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import useFetchProduct from "./hooks/useFetchProduct";
 
 function Home() {
-  const {pros} = useFetchProduct('http://localhost:5000/products')
 
   return (
     <div className="App">
@@ -22,70 +21,7 @@ function Home() {
         </Link>
       </div>
 
-
-      {pros.map((p) => (
-        <article key={p.id}>
-          <h1>{p.name}</h1>
-          
-        </article>
-        
-
-      ))}
-      {/* <section id="product1" className="section-p1">
-        <h2>Featured Products</h2>
-        <p>Summer Collection New Morden design</p>
-        <div className="product-container">
-          <Product
-            brand="Adidas"
-            name={"Cartoon Astronaut T-Shirts"}
-            price={78}
-            url={"public/product/f1.jpg"}
-          />
-
-          <Product
-            brand="Adidas"
-            name={"Cartoon Astronaut T-Shirts"}
-            price={78}
-            url={"public/product/f2.jpg"}
-          />
-          <Product
-            brand="Adidas"
-            name={"Cartoon Astronaut T-Shirts"}
-            price={78}
-            url={"public/product/f3.jpg"}
-          />
-          <Product
-            brand="Adidas"
-            name={"Cartoon Astronaut T-Shirts"}
-            price={78}
-            url={"public/product/f4.jpg"}
-          />
-          <Product
-            brand="Adidas"
-            name={"Cartoon Astronaut T-Shirts"}
-            price={78}
-            url={"public/product/f5.jpg"}
-          />
-          <Product
-            brand="Adidas"
-            name={"Cartoon Astronaut T-Shirts"}
-            price={78}
-            url={"public/product/f6.jpg"}
-          />
-          <Product
-            brand="Adidas"
-            name={"Cartoon Astronaut T-Shirts"}
-            price={78}
-            url={"public/product/f7.jpg"}
-          />
-          <Product
-            brand="Adidas"
-            name={"Cartoon Astronaut T-Shirts"}
-            price={78}
-            url={"public/product/f8.jpg"}
-          />
-        </div>
-      </section> */}
+      
       <Footer />
     </div>
   );

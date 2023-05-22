@@ -38,7 +38,7 @@ function Navbar() {
               </li>
               <li>
                 <NavLink
-                  to="shop"
+                  to="products_page"
                   className={({ isActive }) => (isActive ? "active" : "")}
                 >
                   Shop
@@ -47,7 +47,7 @@ function Navbar() {
               
               <li>
                 <NavLink
-                  to="bag"
+                  to="cart_page"
                   className={({ isActive }) => (isActive ? "active" : "")}
                 >
                   <BiShoppingBag />
