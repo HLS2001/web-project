@@ -10,10 +10,14 @@ router.get('/', async function (req, res) {
     if (Object.keys(req.query).length === 0) {
         res.send(await Product.find().exec());
     } else {
-        let filter = Util.toFilter(req.query);
-        if (filter.category && filter.category === 'default')
-            filter.category = { $in: [null, []] };
-        res.send(await Product.find(filter).exec());
+        if (req.query.search) {
+            res.send(await Product.fuzzySearch(req.query.search));
+        } else {
+            let filter = Util.toFilter(req.query);
+            if (filter.category && filter.category === 'default')
+                filter.category = { $in: [null, []] };
+            res.send(await Product.find(filter).exec());
+        }
     }
 });
 

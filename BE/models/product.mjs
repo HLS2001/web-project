@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import mongooseFuzzySearching from '@rowboat/mongoose-fuzzy-searching';
+
 const { Schema } = mongoose;
 
 const ProductSchema = new Schema({
@@ -28,5 +30,7 @@ const ProductSchema = new Schema({
         ref: 'Category',
     },
 });
+
+ProductSchema.plugin(mongooseFuzzySearching, { fields: ['name'] });
 
 export default mongoose.model('Product', ProductSchema);
