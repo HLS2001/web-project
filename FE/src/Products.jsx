@@ -45,6 +45,10 @@ function Products_page() {
       {products.map((p) => (
         <article key={p._id}>
           <h1>{p.name}</h1>
+          <h2>{p.price}</h2>
+          <h2>{p.discount}</h2>
+          <h2>{p.description}</h2>
+          
           <img src={p.url || "/no-img.png"} alt="" />
           <button
             onClick={(e) => {
