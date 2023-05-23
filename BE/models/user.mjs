@@ -1,4 +1,4 @@
-import './env.mjs';
+import '../env.mjs';
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
