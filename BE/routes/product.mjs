@@ -4,6 +4,10 @@ import * as Util from './util.mjs';
 
 const router = express.Router();
 
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+}
+
 router.get('/', async function (req, res) {
     res.setHeader('Connection', 'close');
 
@@ -11,7 +15,8 @@ router.get('/', async function (req, res) {
         res.send(await Product.find().exec());
     } else {
         if (req.query.search) {
-            res.send(await Product.fuzzySearch(req.query.search));
+            const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+            res.send(await Product.find({ name: regex }).exec());
         } else {
             let filter = Util.toFilter(req.query);
             if (filter.category && filter.category === 'default')

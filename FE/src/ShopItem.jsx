@@ -1,10 +1,10 @@
 export default function (props) {
-    const {title,type} = props
+    const {title,type, name} = props
     
   return (
     <div className="shop-item">
       <label htmlFor="">{title}</label>
-      <input type={type} />
+      <input type={type} name={name} />
     </div>
   );
 }

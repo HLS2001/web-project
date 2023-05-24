@@ -15,23 +15,23 @@ function Products_page() {
   const [hasError, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [category, setCategory] = useState("");
   const [productName, setProductName] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
 
-  const fetchData = useCallback(async function () {
+  const fetchData = useCallback(async function (categoryId, name, minPrice, maxPrice) {
     setLoading(true);
     setError(false);
     try {
       const params = {};
 
-      if (selectedCategory) {
-        params.category = selectedCategory;
+      if (categoryId) {
+        params.categoryId = categoryId
       }
 
-      if (productName) {
-        params.name = productName;
+      if (name) {
+        params.search = name;
       }
 
       if (minPrice) {
@@ -52,11 +52,11 @@ function Products_page() {
     } finally {
       setLoading(false);
     }
-  }, [selectedCategory, productName, minPrice, maxPrice]);
+  }, [ productName, minPrice, maxPrice]);
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    await fetchData();
+    await fetchData(e.target.category.value, e.target.nameSearch.value, e.target.minPrice.value, e.target.maxPrice.value);
   };
 
   const fetchC = useCallback(async function () {
@@ -69,8 +69,8 @@ function Products_page() {
   }, []);
 
   useEffect(() => {
-    fetchData();
     fetchC();
+    fetchData();
   }, [fetchData, fetchC]);
 
   return (
@@ -79,24 +79,27 @@ function Products_page() {
         <div className="shop-mid">
           <SelectInput
             title="Category"
+            name="category"
             options={cs}
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
+            onChange={(e) => setCategory(e.target.value)}
           />
           <ShopItem
             title="Name"
             type="text"
+            name="nameSearch"
             value={productName}
             onChange={(e) => setProductName(e.target.value)}
           />
           <ShopItem
             title="Min Price"
             type="number"
+            name="minPrice"
             value={minPrice}
             onChange={(e) => setMinPrice(e.target.value)}
           />
           <ShopItem
             title="Max Price"
+            name="maxPrice"
             type="number"
             value={maxPrice}
             onChange={(e) => setMaxPrice(e.target.value)}

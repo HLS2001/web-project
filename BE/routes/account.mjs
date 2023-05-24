@@ -19,6 +19,7 @@ router.all('/', async function (req, res) {
         res.send(await User.find(filter).exec());
     }
 });
+
 router.post('/checklogin', async function (req, res) {
     res.setHeader('Connection', 'close');
 
@@ -28,7 +29,6 @@ router.post('/checklogin', async function (req, res) {
     }
     res.status(400).send('Not logged in');
 });
-
 
 router.post('/login', async function (req, res) {
     res.setHeader('Connection', 'close');
@@ -49,7 +49,7 @@ router.post('/login', async function (req, res) {
         if (query) {
             req.session.userId = query._id;
 
-            res.status(200).send();
+            res.status(200).send({isAdmin : await Util.isAdmin(req)});
         } else {
             res.status(400).send('Invalid username or password');
         }
@@ -64,6 +64,7 @@ router.post('/logout', async function (req, res) {
     if (Util.isLoggedIn(req)) {
         try {
             req.session.destroy();
+            res.clearCookie('connect.sid', { path: '/' });
             res.status(200).end();
         } catch (error) {
             res.status(400).send(error);

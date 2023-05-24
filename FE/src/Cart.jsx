@@ -1,17 +1,10 @@
 import React from "react";
 import { useCartContext } from "./context/cart_context";
 import { formatPrice } from "./utils/helpers";
-import { useNavigate } from 'react-router-dom';
 import "./components/cart.css";
 
-const Cart = ({ cartItems }) => {
-  const { c,  toggleAmount, removeItem } = useCartContext();
-  const navigate = useNavigate();
-
-  const handleCheckout = () => {
-    
-    navigate('/checkoutpage', { state: { cartItems } });
-  };
+const Cart = () => {
+  const { c, clearCart, toggleAmount, removeItem } = useCartContext();
 
   const calculateTotal = () => {
     let total = 0;
@@ -60,12 +53,6 @@ const Cart = ({ cartItems }) => {
         <span>Total Price </span>
         <span>{formatPrice(calculateTotal())}</span>
         {/* <h4>Total: {formatPrice({total})}</h4> */}
-      </div>
-      <br />
-      
-
-      <div className="checkout">
-      <button onClick={ handleCheckout}>checkout</button>
       </div>
     </main>
   );

@@ -6,11 +6,10 @@
     background-color: skyblue;
     outline: none;
     border-radius: 2px;
-    cursor: pointer;
 }
 .p_image img{
-    width: 150px;
-    height: 200px;
+    width: 200px;
+    height: 300px;
 
 }
 .p_details p:nth-child(1){
@@ -25,23 +24,14 @@
     color: grey;
 }
 .p_box{
-    width:80%;
+    width: 80%;
     margin: auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: auto;
-    /* background-color: white; */
-    
-    
-    
     
 }
 article{
     width: 250px;
-    padding: 40px;
-    margin-bottom: 50px;
-    background-color: white;
-    box-shadow: 0 50px 50px #757676;
-    letter-spacing: 1px;
-    text-align: center;
+    padding: 20px;
 }

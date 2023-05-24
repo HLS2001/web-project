@@ -4,8 +4,8 @@ import axios from "./axios_instance.jsx";
 const UserContext = React.createContext();
 export const UserProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
   const [msg, setMsg] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const checklogin = useCallback(async () => {
     try {
@@ -15,7 +15,7 @@ export const UserProvider = ({ children }) => {
       setIsLoggedIn(true)
       console.log('login already');
     } catch (error) {
-      console.log('Not login yet' );
+      console.log('Not login yet');
     }
   }, []);
 
@@ -29,6 +29,11 @@ export const UserProvider = ({ children }) => {
         }
       );
       console.log(res);
+      if (res.data.isAdmin) {
+        setIsAdmin(res.data.isAdmin)
+      } else {
+        setIsAdmin(false);
+      }
       setMsg("Login successful");
       setIsLoggedIn(true)
     } catch (error) {
@@ -43,6 +48,7 @@ export const UserProvider = ({ children }) => {
         `${import.meta.env.VITE_BE_URI}account/logout`
       );
       console.log(res);
+      setIsAdmin(false);
       setIsLoggedIn(false);
     } catch (error) {
       console.error("Error logging out:", error);
@@ -55,7 +61,7 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ msg, isLoggedIn, handleLogout, handleLogin }}
+      value={{ msg, isLoggedIn, handleLogout, handleLogin, isAdmin }}
     >
       {children}
     </UserContext.Provider>

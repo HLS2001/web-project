@@ -8,10 +8,8 @@ import { useUserContext } from "./context/user_context";
 
 function Navbar() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
-  
-  const { isLoggedIn,handleLogout } = useUserContext();
-  
-  
+
+  const { isLoggedIn, handleLogout, isAdmin } = useUserContext();
 
   return (
     <>
@@ -60,25 +58,26 @@ function Navbar() {
                 </li>
                 <li>
                   {isLoggedIn ? (
-                    <button onClick={handleLogout}>Logout</button>
+                    <NavLink to="/" className="" onClick={handleLogout}>Logout</NavLink>
                   ) : (
                     <NavLink
-                    to="login"
-                    className={({ isActive }) => (isActive ? "active" : "")}
-                  >
-                    login
-                  </NavLink>
+                      to="login"
+                      className={({ isActive }) => (isActive ? "active" : "")}
+                    >
+                      login
+                    </NavLink>
                   )}
-                  
                 </li>
-                <li>
-                <NavLink
-                  to="admin"
-                  className={({ isActive }) => (isActive ? "active" : "")}
-                >
-                  Admin
-                </NavLink>
-              </li>
+                {/* <li>
+                  {
+                    isAdmin ? (
+                      <NavLink
+                        to="/admin"
+                        className={({ isActive }) => (isActive ? "active" : "")}
+                      >Admin Panel</NavLink>
+                    ) : (<div></div>)
+                  }
+                </li> */}
               </ul>
             </div>
           </div>

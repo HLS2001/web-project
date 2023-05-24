@@ -8,10 +8,10 @@ router.get('/', async function (req, res) {
     res.setHeader('Connection', 'close');
 
     if (Object.keys(req.query).length === 0) {
-        res.send(await Product.find().exec());
+        res.send(await Category.find().exec());
     } else {
         let filter = Util.toFilter(req.query);
-        res.send(await Product.find(filter).exec());
+        res.send(await Category.find(filter).exec());
     }
 });
 

@@ -79,15 +79,3 @@ main{
     border-radius: 5px;
     cursor: pointer;
 }
-.checkout button{
-    padding: 5px 10px;
-    font-weight: bold;
-    letter-spacing: 2px;
-    border:none;
-    outline: none;
-    color: white;
-    background-color: skyblue;
-    border-radius: 5px;
-    cursor: pointer;
-
-}

@@ -41,30 +41,18 @@ export const CartProvider = ({ children }) => {
 
   // toggle amount
   const toggleAmount = (id, value) => {
-    sC((prev) =>
-      prev.map((p) => {
-        if (p._id === id) {
-          const newVal = p.amount + value;
-          return { ...p, amount: newVal < 0 ? 0 : newVal };
-        }
-        return p;
-      })
-    );
+    sC(prev => prev.map(p => {
+             if(p._id === id) {
+                  const newVal = p.amount + value
+                  return { ...p, amount: newVal < 0 ? 0 : newVal }
+             }
+             return p
+          }))
   };
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(c));
   }, [c]);
-
-
-
-  
-
-
-
-
-
-
 
   return (
     <CartContext.Provider
