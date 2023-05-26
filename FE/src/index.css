@@ -355,7 +355,8 @@ footer {
   background-color: #E9E0F7;
   width: 1000px;
   max-width:  100%;
-  margin: 50px auto 0;
+  /* margin: 50px auto 0; */
+  margin: auto  ;
   border-radius: 10px;
 }
 .shop-mid{
@@ -483,3 +484,4 @@ footer {
 
 
 }
+

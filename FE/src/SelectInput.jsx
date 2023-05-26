@@ -4,8 +4,8 @@ export default function (props) {
     <div className="shop-item">
       <label htmlFor={title}>{title}</label>
       <select onChange={()=>{}}>
-        {options.map(opt => {
-            return <option></option>
+        {options.map(({name, _id}) => {
+            return <option key={_id} value={name}>{name}</option>
         })}
       </select>
     </div>

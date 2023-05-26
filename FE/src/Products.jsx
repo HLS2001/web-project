@@ -4,63 +4,140 @@ import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useCartContext } from "./context/cart_context";
 import { useRef } from "react";
+import "./components/product.css";
+
+
 
 function Products_page() {
   const { addToCart } = useCartContext();
   const [products, setProducts] = useState([]);
+  const [cs, setCs] = useState([]);
   const [hasError, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [productName, setProductName] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
 
   const fetchData = useCallback(async function () {
     setLoading(true);
     setError(false);
     try {
-      const { data } = await axios.get(`${import.meta.env.VITE_BE_URI}product`);
+      const params = {};
+
+      if (selectedCategory) {
+        params.category = selectedCategory;
+      }
+
+      if (productName) {
+        params.name = productName;
+      }
+
+      if (minPrice) {
+        params.minPrice = minPrice;
+      }
+
+      if (maxPrice) {
+        params.maxPrice = maxPrice;
+      }
+
+      const { data } = await axios.get(`${import.meta.env.VITE_BE_URI}product`, {
+        params: params
+      });
+
       setProducts(data);
     } catch (error) {
       setError(true);
     } finally {
       setLoading(false);
     }
+  }, [selectedCategory, productName, minPrice, maxPrice]);
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    await fetchData();
+  };
+
+  const fetchC = useCallback(async function () {
+    try {
+      const { data } = await axios.get(`${import.meta.env.VITE_BE_URI}category`);
+      setCs(data);
+    } catch (error) {
+    } finally {
+    }
   }, []);
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+    fetchC();
+  }, [fetchData, fetchC]);
 
   return (
     <div className="shop-body">
-      <form className="Shop">
+      <form className="Shop" onSubmit={handleSearch}>
         <div className="shop-mid">
-          <SelectInput title="Category" options={[]} />
-          <ShopItem title="Name" type="text" />
-          <ShopItem title="Min Price" type="number" />
-          <ShopItem title="Max Price" type="number" />
+          <SelectInput
+            title="Category"
+            options={cs}
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          />
+          <ShopItem
+            title="Name"
+            type="text"
+            value={productName}
+            onChange={(e) => setProductName(e.target.value)}
+          />
+          <ShopItem
+            title="Min Price"
+            type="number"
+            value={minPrice}
+            onChange={(e) => setMinPrice(e.target.value)}
+          />
+          <ShopItem
+            title="Max Price"
+            type="number"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
+          />
 
           <div className="shop-item-submit">
-            <button>search</button>
+            <button type="submit">search</button>
           </div>
         </div>
       </form>
-      {products.map((p) => (
-        <article key={p._id}>
-          <h1>{p.name}</h1>
-          <h2>{p.price}</h2>
-          <h2>{p.discount}</h2>
-          <h2>{p.description}</h2>
-          
-          <img src={p.url || "/no-img.png"} alt="" />
-          <button
-            onClick={(e) => {
-              addToCart(p._id, 1, p);
-            }}
-          >
-            add to cart
-          </button>
-        </article>
-      ))}
+      <br />
+      <br />
+      <br />
+      <br />
+
+      <section className="p_box">
+        {products.map((p) => (
+          <article key={p._id}>
+            <div className="p_image">
+              <img src={p.url || "/no-img.png"} alt="" />
+            </div>
+
+            <div className="p_details">
+              <p>{p.name}</p>
+              <p>Price: {p.price}$</p>
+              {/* <p>{p.discount}</p> */}
+              <p>{p.description}</p>
+              <button
+                onClick={(e) => {
+                  addToCart(p._id, 1, p);
+                }}
+              >
+                Add to cart
+              </button>
+            </div>
+          </article>
+        ))}
+      </section>
     </div>
   );
 }
+
 
 export default Products_page;

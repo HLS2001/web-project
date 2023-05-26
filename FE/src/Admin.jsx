@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "./context/user_context";
 
-function Login() {
+function Admin() {
   const { handleLogin, msg ,isLoggedIn} = useUserContext();
   const uniRef = useRef();
   const pdRef = useRef();
@@ -47,9 +47,6 @@ function Login() {
           <br />
           <br />
 
-          <div className="remember-me--forget-password">
-            <p>forget password?</p>
-          </div>
 
           <br />
 
@@ -58,10 +55,7 @@ function Login() {
           <br />
           <br />
           <br />
-          <p>
-            You don't have an account yet sign up here{" "}
-            <Link to="/Register">SignUp!</Link>
-          </p>
+          
           {msg && <p>{msg}</p>}
           <br />
           <br />
@@ -72,4 +66,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Admin;

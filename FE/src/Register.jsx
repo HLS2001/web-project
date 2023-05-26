@@ -1,5 +1,6 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useRef , useState} from "react";
 import axios from 'axios'
+import { Link, useNavigate } from "react-router-dom";
 
 
 function Register() {
@@ -8,6 +9,8 @@ function Register() {
   const pRef = useRef()
   const eRef = useRef()
   const adRef = useRef()
+  const navigate = useNavigate();
+  const [errorMsg, setErrorMsg] = useState('');
   
   const handleRegister = useCallback(async()=>{
     const uni = uniRef.current
@@ -16,32 +19,10 @@ function Register() {
     const e = eRef.current
     const ad = adRef.current
     
-
-    if(!uni) {
-        console.log('uni is und');
-        return;
+    if (!uni || !pd || !p || !e || !ad) {
+      setErrorMsg('Please fill in all fields.');
+      return;
     }
-    if(!pd) {
-        console.log('pd is und');
-        return;
-    }
-    if(!p) {
-        console.log('p is und');
-        return;
-    }
-    if(!e) {
-        console.log('e is und');
-        return;
-    }
-    if(!ad) {
-        console.log('ad is und');
-        return;
-    }
-    console.log(uni.value);
-    console.log(pd.value);
-    console.log(p.value);
-    console.log(e.value);
-    console.log(ad.value);
 
     try {
       const res = await axios.post(`${import.meta.env.VITE_BE_URI}account/add`,{
@@ -53,8 +34,10 @@ function Register() {
         address: ad.value
       })
       console.log(res);
+      navigate('/login');
     } catch (error) {
       console.error(error);
+      setErrorMsg('Registration failed. Please try again.');
     }
 
   },[])
@@ -76,9 +59,13 @@ function Register() {
   
           <div className="right">
             <h5>Register</h5>
+            <br />
+            <br /><br />
+            {errorMsg && <p>{errorMsg}</p>}
+
   
             <div className="inputs">
-              <input type="text" ref={uniRef} placeholder="user name" />
+              <input type="text" ref={uniRef} placeholder="user name" /> 
               <br />
               <input type="password" ref={pdRef} placeholder="password" />
               <br/>
@@ -97,6 +84,9 @@ function Register() {
             <br />
             <br />
             <button onClick={handleRegister}>SignUp!</button>
+            <br />
+          <br />
+          <p>Already have an account? <br /> <Link to="/Login">Login here</Link></p>
           </div>
         </div>
       </div>
