@@ -19,6 +19,16 @@ router.all('/', async function (req, res) {
         res.send(await User.find(filter).exec());
     }
 });
+router.post('/checklogin', async function (req, res) {
+    res.setHeader('Connection', 'close');
+
+    if (Util.isLoggedIn(req)) {
+        res.status(200).send('User is already logged in');
+        return
+    }
+    res.status(400).send('Not logged in');
+});
+
 
 router.post('/login', async function (req, res) {
     res.setHeader('Connection', 'close');
